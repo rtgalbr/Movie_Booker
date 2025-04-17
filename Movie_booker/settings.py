@@ -37,15 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',  # Required for allauth
+    #below this is the required apps for Oauth2.0 to work
+    'django.contrib.sites', 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google', 
+    #below this is the django app
     'movies',
 ]
 
-SITE_ID = 1
+SITE_ID = 1 #this referes to the order of the site (i.e. http://localhost) in the django database, if this number is changed, expect a error message
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -54,17 +56,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
+    'allauth.account.middleware.AccountMiddleware', #Oauth2.0 required middleware
 ]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',#Oauth2.0 required backend
 ]
 
 ROOT_URLCONF = 'Movie_booker.urls'
 
-TEMPLATES = [
+TEMPLATES = [ #allows the program to find your templates to display online
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         
@@ -97,7 +99,7 @@ DATABASES = {
 }
 
 
-
+#URLs for login, logout, and redirects
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
