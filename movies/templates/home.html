@@ -12,6 +12,7 @@
         <h1>Welcome, {{ user.username }}!</h1>
         {% if user.is_authenticated %}
             <p>You are logged in. Enjoy the restricted content!</p>
+            <a href="{% url 'browse/1' %}" class="button">browse movies</a>
             <a href="{% url 'landing' %}" class="button">Logout</a>
         {% endif %}
     </div>

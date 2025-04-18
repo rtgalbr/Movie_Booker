@@ -1,8 +1,9 @@
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from allauth.account.forms import LoginForm, SignupForm
 from django.contrib import messages
-
+from movies.models import Movie
 
 def signup_view(request):
     if request.method == 'POST':
@@ -27,3 +28,10 @@ def landing(request):
 @login_required
 def home(request):
     return render(request, 'home.html', {'user': request.user})
+
+def browse(request, movie_id):
+    movie = Movie.objects.get(pk=movie_id)
+    if movie is not None:
+        return render(request, 'browse.html', {'movie': movie})
+    else:
+        raise Http404('Movie does not exist')

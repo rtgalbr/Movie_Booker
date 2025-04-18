@@ -6,5 +6,6 @@ urlpatterns = [
     path('home/', home, name='home'),   # Home page (requires login)
     path('userlogin/', login_view, name='userlogin'),
     path('usersignup/', signup_view, name='usersignup'),
+    
    
 ]

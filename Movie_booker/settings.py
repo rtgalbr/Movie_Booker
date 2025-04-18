@@ -105,6 +105,9 @@ LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
 
+MEDIA_ROOT = 'movies/files/covers'
+MEDIA_URL = 'browse/movies/files/covers/'
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
