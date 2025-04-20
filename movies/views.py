@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import  render, redirect
 from django.contrib.auth.decorators import login_required
 from allauth.account.forms import LoginForm, SignupForm
 from django.contrib import messages
@@ -15,23 +15,32 @@ def signup_view(request):
     else:
         form = SignupForm()  # Create a new instance of the form
 
-    return render(request, 'signup.html', {'form': form})  # Render the form in the template
+    return render(request, 'authentication/signup.html', {'form': form})  # Render the form in the template
 
 def login_view(request):
     form = LoginForm()
-    return render(request, 'login.html', {'form': form})  
+    return render(request, 'authentication/login.html', {'form': form})  
 
 
 def landing(request):
-    return render(request, 'landing.html')
+    return render(request, 'authentication/landing.html')
 
 @login_required
 def home(request):
-    return render(request, 'home.html', {'user': request.user})
+    return render(request, 'user/home.html', {'user': request.user})
 
-def browse(request, movie_id):
-    movie = Movie.objects.get(pk=movie_id)
-    if movie is not None:
-        return render(request, 'browse.html', {'movie': movie})
+def browse(request):
+    query = request.GET.get('search')
+    if query:
+        movies = Movie.objects.filter(Title__icontains=query)
     else:
-        raise Http404('Movie does not exist')
+        movies = Movie.objects.all()
+    return render(request, 'catalog/browse.html', {'movies': movies})
+
+def browse_detail(request, movie_id):
+    movie = Movie.objects.get (pk=movie_id)
+    return render(request, 'catalog/movie_detail.html', {'movie': movie})
+
+@login_required
+def profile(request):
+    return render(request, 'user/profile.html')
