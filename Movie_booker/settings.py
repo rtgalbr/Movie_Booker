@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google', 
     #below this is the django app
-    'movies',
+    
+    'movies.apps.MoviesConfig', 
 ]
 
 SITE_ID = 1 #this referes to the order of the site (i.e. http://localhost) in the django database, if this number is changed, expect a error message
@@ -100,10 +101,10 @@ DATABASES = {
 
 
 #URLs for login, logout, and redirects
-LOGIN_URL = 'login'
+LOGIN_URL = 'landing'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'login'
+LOGOUT_REDIRECT_URL = 'landing'
 
 MEDIA_ROOT = ''
 MEDIA_URL = ''

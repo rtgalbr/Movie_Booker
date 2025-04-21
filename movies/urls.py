@@ -1,4 +1,5 @@
 from django.urls import path
+from movies.views import ChangePasswordView
 from movies.views import home, landing, login_view, signup_view, profile, browse, browse_detail
 
 
@@ -8,8 +9,9 @@ urlpatterns = [
     path('userlogin/', login_view, name='userlogin'),
     path('usersignup/', signup_view, name='usersignup'),
     path('home/profile/', profile, name='user_profile'),
-    path('home/browse/', browse, name='browse'),
-    path('home/browse/<int:movie_id>/', browse_detail, name='browse_id'),
+    path('browse/', browse, name='browse'),
+    path('browse/<int:movie_id>/', browse_detail, name='browse_id'),
+    path('password-change/', ChangePasswordView.as_view(), name='password_change'),
     
    
 ]
