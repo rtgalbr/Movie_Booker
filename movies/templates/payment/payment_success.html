@@ -1,0 +1,5 @@
+<h2>Payment Verified!</h2>
+<p>Your ticket for <strong>{{ ticket.showtime.movie.Title }}</strong> at {{ ticket.showtime.start_time }} has been successfully purchased.</p>
+<p>Your confirmation code is: <strong>{{ purchase_code }}</strong></p>
+
+<a href="{% url 'movie_detail' ticket.showtime.movie.id %}">Back to Movie Details</a>

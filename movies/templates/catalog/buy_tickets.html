@@ -1,0 +1,20 @@
+
+{% block content %}
+<h2>Buy Tickets for {{ showtime.movie.Title }}</h2>
+<form method="post">
+  {% csrf_token %}
+  <p>Select seats:</p>
+  {% for seat in available_seats %}
+    <label>
+      <input type="checkbox" name="selected_seats" value="{{seat.id}}">
+      {{seat.seat_number}}
+    </label><br>
+  {% empty %}
+    <p>No available seats.</p>
+  {% endfor %}
+  <br>
+  <button type="submit">Pay</button>
+  <a href="{% url 'browse_id' showtime.movie.id %}">Back </a>
+
+</form>
+{% endblock %}

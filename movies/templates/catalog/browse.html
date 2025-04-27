@@ -10,8 +10,13 @@
 </head>
 <body>
     <div class="container">
+        
         <h1>Browse Movies</h1>
-        <a href="{% url 'home' %}" class="button">Return to home page</a>
+        {%if user.is_authenticated%}
+            <a href="{% url 'hub' %}" class="button">Return to home page</a>
+        {%else%}
+            <a href="{% url 'home' %}" class="button">Return to home page</a>
+        {%endif%}
         <form method="get" action="{% url 'browse' %}">
             <input type="text" name="search" placeholder="Search by title..." value="{{ request.GET.search }}">
             <button type="submit">Search</button>

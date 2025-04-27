@@ -9,7 +9,26 @@
     {% endif %}
     
    
+    <a href="{% url 'movie_reviews' movie.id %}">See Reviews / Leave a Review</a>
+    <a href="{% url 'browse' %}">Back to Browse</a>
 
-    <a href="{% url 'browse' %}">← Back to Browse</a>
+    <h3>Showtimes:</h3>
+<ul>
+    {% for showtime in showtimes %}
+        <li>
+            <strong>{{ showtime.start_time|date:"D, M d, Y H:i" }} - {{ showtime.end_time|date:"H:i" }}</strong>
+            <br>
+            Location: {{ showtime.location }}
+            <br>
+            Available Seats: {{ showtime.available_seats_count }}
+            <br>
+            <a href="{% url 'buy_tickets' showtime.id %}">Buy Tickets</a>
+        </li>
+    {% empty %}
+        <p>No showtimes available.</p>
+    {% endfor %}
+</ul>
+    
 </body>
 </html>
+

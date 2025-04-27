@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     #below this is the django app
     
     'movies.apps.MoviesConfig', 
+    
+    'payments',
 ]
 
 SITE_ID = 1 #this referes to the order of the site (i.e. http://localhost) in the django database, if this number is changed, expect a error message
@@ -103,8 +105,11 @@ DATABASES = {
 #URLs for login, logout, and redirects
 LOGIN_URL = 'landing'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'landing'
+LOGIN_REDIRECT_URL = 'hub'
+LOGOUT_REDIRECT_URL = 'home'
+SOCIALACCOUNT_LOGIN_ON_GET=True
+SOCIALACCOUNT_LOGOUT_ON_GET=True
+ACCOUNT_LOGOUT_ON_GET=True
 
 MEDIA_ROOT = ''
 MEDIA_URL = ''
@@ -126,6 +131,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+PAYMENT_VARIANTS = {
+    'dummy': ('payments.dummy.DummyProvider', {}),
+}
 
 
 # Internationalization

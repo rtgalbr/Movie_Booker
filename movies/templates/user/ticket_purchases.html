@@ -1,0 +1,22 @@
+{% block content %}
+<h2>Your Ticket Purchases</h2>
+
+{% if tickets %}
+  <ul>
+    {% for ticket in tickets %}
+      <li>
+        Movie: {{ ticket.showtime.movie.Title }}<br>
+        Showtime: {{ ticket.showtime.start_time|date:"D, M d, Y H:i" }}<br>
+        Ticket Code: <strong>{{ ticket.ticket_code }}</strong>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>You haven't purchased any tickets yet.</p>
+{% endif %}
+<br>
+{%if user.is_authenticated%}
+  <a href="{% url 'hub' %}" class="button">Return to home page</a>
+{%endif%}
+{% endblock %}
+
