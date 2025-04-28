@@ -111,6 +111,8 @@ SOCIALACCOUNT_LOGIN_ON_GET=True
 SOCIALACCOUNT_LOGOUT_ON_GET=True
 ACCOUNT_LOGOUT_ON_GET=True
 
+
+
 MEDIA_ROOT = ''
 MEDIA_URL = ''
 
@@ -154,6 +156,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Your app-level static files
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
