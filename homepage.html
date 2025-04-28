@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!-- declare html5 file -->
+<html lang = "en" class="scroll-smooth"> <!-- the file is in english, scrolling smoothly when changing tab -->
+<head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width=device-width, initian-scale=1.0">
+    <!-- make the website responsive, adjustabe to the screen size -->
+    <title>Movie Booking System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./tailwind.config.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Ovo&display=swap" rel="stylesheet">
+</head>
+<body class="overflow-x-hidden font-Outfit leading-8">
+
+    <!-- basic button -->
+    <nav class="w-full fixed px-5 lg:px-8 xl:px-[5%] py-4 flex items-center justify-between z-50">
+        <!-- make all the button allign on the same line -->
+        <img src="./image/logo.png" alt="Logo"
+        class = "w-28 cursos-pointer mr-14">
+        <!-- images file has to be in the same folder -->
+        <!-- w-28: adjust the logo size -->
+        <ul class="hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50 font-Ovo">
+            <li class="cursor-pointer hover:-translate-y-1 duration-500"><a href="#home">Home</a></li>
+            <li class="cursor-pointer hover:-translate-y-1 duration-500"><a href="#current">Current</a></li>
+            <li class="cursor-pointer hover:-translate-y-1 duration-500"><a href="#upcoming">Upcoming</a></li>
+            <!--<li class="cursor-pointer hover:-translate-y-1 duration-500"><a href="#contact">Contact me</a></li> -->
+        </ul> 
+        
+        <!-- search bar -->
+        <div class="search_container gap-0 px-5 py-0.5 border border-gray-500 rounded-full ml-1 font-Ovo cursor-pointer">
+            <input type="text" placeholder=" Search movie " style="background-color: transparent;">
+        </div>
+
+        <!-- login button-->
+        <button type='button' class='hidden lg:flex items-center gap-0 px-5 py-0.5 border border-gray-500 rounded-full ml-1 font-Ovo cursor-pointer hover:-translate-y-1 duration-500' onclick="window.location.href='login.html'"><a href="#login"></a>Log in</button>    
+              
+        <!-- navigate user/admin to the log in page -->
+        <button class="block md:hidden ml-3" onclick="openmenu()"> <!-- hid the navigaiton bar when on larger screen -->
+            <img src="./image/navigation.png" alt="" class="w-6">
+        </button>
+        </div>
+
+        <!-- mobile menu -->
+        <ul id="sidemenu" class="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-red-50 transition duration-500 font-Ovo">
+
+            <div class="absolute right-5 top-7" onclick="closemenu()">
+                <img src="./image/navigation.png" alt="" class="w-6">
+            </div>
+            <li><a href="#home" onclick="closemenu()">Home</a></li>
+            <li><a href="#current" onclick="closemenu()">Current</a></li>
+            <li><a href="#upcoming" onclick="closemenu()">Upcoming</a></li>
+            <li><a href="#login" onclick="window.location.href='login.html'">Log in</a></li>
+            <!-- close the tab when click on button -->
+        </ul> 
+        
+    </nav>
+
+    <!-- Home page -->
+    <div id="home" class="w-11/12 max-w-3xl text-center mx-auto h-screen flex flex-col items-center justify-center gap-4">
+
+        <h1 class="text-3xl sm:text-6xl lg:text-[66px] font-Ovo">Coming soon ...</h1>
+
+    </div>
+
+    <!-- Current movies -->
+    <div id="current" class="w-full px-[12%] py-10 scroll-mt-20"> <!-- w-full px-[1%] py-10 is to create more space between 2 sections to not overlap --> 
+        <!-- id="about" when click on about me, will move to about me section -->
+        <h2 class="text-center text-5xl font-Ovo">Current</h2>
+        <div class="grid grid-cols-auto my-10 gap-5">
+            <div class="aspect-square bg-[url('./image/pink.avif')] bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group">
+                <div class="w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">                    
+                    <button type='button' class='py-2.5 px-6 text-sm bg-red-500 text-white rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 hover:bg-red-700' onclick="window.location.href='seating.html'">Book now</button>             
+                </div>
+            </div>
+            <div class="aspect-square bg-[url('./image/pink.avif')] bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group">
+                <div class="w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
+                    <button type='button' class='py-2.5 px-6 text-sm bg-red-500 text-white rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 hover:bg-red-700' onclick="window.location.href='seating.html'">Book now</button>
+                </div>
+            </div><div class="aspect-square bg-[url('./image/pink.avif')] bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group">
+                <div class="w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
+                    <button type='button' class='py-2.5 px-6 text-sm bg-red-500 text-white rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 hover:bg-red-700' onclick="window.location.href='seating.html'">Book now</button>
+                </div>
+            </div><div class="aspect-square bg-[url('./image/pink.avif')] bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group">
+                <div class="w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
+                    <button type='button' class='py-2.5 px-6 text-sm bg-red-500 text-white rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 hover:bg-red-700' onclick="window.location.href='seating.html'">Book now</button>
+                </div>
+            </div>
+
+        </div>
+        <a href="#" class="py-3 px-8 w-max flex items-center justify-between gap-2 bg-black/50 text-white rounded-full mx-auto hover:bg-black duration-500">Show more</a>
+    </div>
+
+    <!-- Upcoming Movies -->
+    <div id="upcoming" class="w-full px-[12%] py-10 scroll-mt-20"> 
+        <h2 class="text-center text-5xl font-Ovo">Upcoming</h2>
+        <div class="grid grid-cols-auto my-10 gap-5">
+            <div class="aspect-square bg-[url('./image/pink.avif')] w-full h-auto relative z-0 rounded-lg transition-all duration-300 hover:scale-110"></div>
+            <div class="aspect-square bg-[url('./image/pink.avif')] w-full h-auto relative z-0 rounded-lg transition-all duration-300 hover:scale-110"></div>
+            <div class="aspect-square bg-[url('./image/pink.avif')] w-full h-auto relative z-0 rounded-lg transition-all duration-300 hover:scale-110"></div>
+            <div class="aspect-square bg-[url('./image/pink.avif')] w-full h-auto relative z-0 rounded-lg transition-all duration-300 hover:scale-110"></div>
+        </div>
+        <a href="#" class="py-3 px-8 w-max flex items-center justify-between gap-2 bg-black/50 text-white rounded-full mx-auto hover:bg-black duration-500">Show more</a>
+    </div>    
+
+    <!-- footer -->
+    <div class="mt-20">
+            <div class="text-center">
+                <img src="./image/logo.png" alt="" class="w-36 mx-auto mb-2">
+                <div class="w-max flex items-center gap-2 mx-auto">
+                    <img src="./image/email.png" alt="" class="w-10">
+                    moviebookingsystem@gmail.com
+                </div>
+            </div>
+            <div class="text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] mt-12 py-6">
+                <p>© 2025 MBS. All rights reserved.</p>
+                <ul class=" flex items-center gap-10 justify-center mt-4 sm:mt-0">
+                    <li><a href="https://www.instagram.com/_nhule_pb/">Instagram</a></li>
+                    <li><a href="https://www.linkedin.com/in/nhu-le-9179972a6/">Linkedin</a></li>
+                    <li><a href="https://github.com/nhulepb/">GitHub</a></li>
+
+                </ul>
+            </div>
+    </div> 
+
+    <script>
+        const sidemenu = document.querySelector('#sidemenu');
+        const navBar = document.querySelector("nav");
+        const navLinks = document.querySelector("nav ul");
+
+        function openmenu(){
+            sidemenu.style.transform = 'translateX(-16rem)';
+        }
+        function closemenu(){
+            sidemenu.style.transform = 'translateX(16rem)';
+        }
+
+
+        window.addEventListener('scroll', ()=>{
+            if (scrollY > 50){
+                navBar.classList.add('bg-white', 'bg-opacity-50', 'backdrop-blur-lg', 'shadow-sm')
+                navLinks.classList.remove('bg-white', 'shadow-sm', 'bg-opacity-50')
+            }else{
+                navBar.classList.remove('bg-white', 'bg-opacity-50', 'backdrop-blur-lg', 'shadow-sm')
+                navLinks.classList.add('bg-white', 'shadow-sm', 'bg-opacity-50')
+            }
+        })
+
+    </script> 
+</body>
+</html>

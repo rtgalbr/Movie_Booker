@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./tailwind.config.js"></script>
+    <!--Google Fonts and Icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Ovo&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Added animation keyframes */
+        @keyframes popIn {
+          0% {
+            transform: scale(0.95);
+            opacity: 0;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+      
+        body {
+          width: 100%;
+          height: 100vh;
+          margin: 0;
+          padding: 0;
+          font-family: 'Ovo', serif;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+      
+        .center {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding-top: 5rem;
+        }
+      
+        .tickets {
+          width: 750px; /* Increased the width */
+          max-width: 90%;
+          height: fit-content;
+          border: 0.4mm solid rgba(0, 0, 0, 0.08);
+          border-radius: 3mm;
+          box-sizing: border-box;
+          padding: 30px; /* Increased padding */
+          font-family: 'Ovo', serif;
+          max-height: 90vh;
+          overflow: auto;
+          background: white;
+          box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
+          animation: popIn 0.5s ease-out;
+        }
+      
+        .ticket-selector {
+          background: rgb(243, 243, 243);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-direction: column;
+          box-sizing: border-box;
+          padding: 30px; /* Increased padding */
+        }
+      
+        .head {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 30px;
+        }
+      
+        .title {
+          font-size: 30px; /* Increased font size */
+          font-weight: 700; /* Increased weight */
+        }
+      
+        .seats {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          min-height: 150px;
+          position: relative;
+        }
+      
+        .status {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+        }
+      
+        .seats::before {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translate(-50%, 0);
+          width: 220px;
+          height: 7px;
+          background: rgb(141, 198, 255);
+          border-radius: 0 0 3mm 3mm;
+          border-top: 0.3mm solid rgb(180, 180, 180);
+        }
+      
+        .item {
+          font-size: 16px; /* Increased font size */
+          position: relative;
+        }
+      
+        .item::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: -12px;
+          transform: translate(0, -50%);
+          width: 12px;
+          height: 12px;
+          background: rgb(255, 255, 255);
+          outline: 0.3mm solid rgb(120, 120, 120);
+          border-radius: 0.3mm;
+        }
+      
+        .item:nth-child(2)::before {
+          background: rgb(180, 180, 180);
+          outline: none;
+        }
+      
+        .item:nth-child(3)::before {
+          background: rgb(28, 185, 120);
+          outline: none;
+        }
+      
+        .all-seats {
+          display: grid;
+          grid-template-columns: repeat(10, 1fr);
+          grid-gap: 18px; /* Increased gap between seats */
+          margin: 60px 0;
+          margin-top: 20px;
+          position: relative;
+        }
+      
+        .seat {
+          width: 24px; /* Increased seat size */
+          height: 24px; /* Increased seat size */
+          background: white;
+          border-radius: 0.5mm;
+          outline: 0.3mm solid rgb(180, 180, 180);
+          cursor: pointer;
+        }
+      
+        .all-seats input:checked + label {
+          background: rgb(28, 185, 120);
+          outline: none;
+        }
+      
+        .seat.booked {
+          background: rgb(180, 180, 180);
+          outline: none;
+        }
+      
+        input {
+          display: none;
+        }
+      
+        .timings {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin-top: 30px;
+        }
+      
+        .dates {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+      
+        .dates-item {
+          width: 60px; /* Increased width */
+          height: 50px; /* Increased height */
+          background: rgb(233, 233, 233);
+          text-align: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          padding: 10px 0;
+          border-radius: 2mm;
+          cursor: pointer;
+        }
+      
+        .day {
+          font-size: 18px; /* Increased font size */
+        }
+      
+        .times {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 10px;
+        }
+      
+        .time {
+          font-size: 16px; /* Increased font size */
+          width: fit-content;
+          padding: 10px 18px; /* Increased padding */
+          background: rgb(233, 233, 233);
+          border-radius: 2mm;
+          cursor: pointer;
+        }
+      
+        .timings input:checked + label {
+          background: rgb(28, 185, 120);
+          color: white;
+        }
+      
+        .price {
+          width: 100%;
+          box-sizing: border-box;
+          padding: 15px 30px; /* Increased padding */
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+      
+        .total {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+          font-size: 18px; /* Increased font size */
+          font-weight: 600; /* Increased font weight */
+        }
+      
+        .total span {
+          font-size: 14px; /* Increased font size */
+          font-weight: 400;
+        }
+      
+        .price button {
+          background: rgb(60, 60, 60);
+          color: white;
+          font-family: 'Ovo', serif;
+          font-size: 18px; /* Increased font size */
+          padding: 10px 20px; /* Increased padding */
+          border-radius: 2mm;
+          outline: none;
+          border: none;
+          cursor: pointer;
+        }
+
+          /* Location section styling */
+        .location {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .location-title {
+            font-size: 22px; /* Adjusted font size */
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .location-items {
+            display: flex;
+            flex-direction: row; /* Change to row for horizontal alignment */
+            justify-content: space-between; /* Space items evenly */
+            align-items: center; /* Align items vertically in the center */
+            width: 100%; /* Make the container width 100% to take up the available space */
+            flex-wrap: wrap; /* Allows the items to wrap to the next line if necessary */
+            gap: 10px; /* Add some space between the items */
+        }
+
+        .location-item {
+            font-size: 16px; /* Consistent font size */
+            background: rgb(233, 233, 233);
+            padding: 10px 20px;
+            margin: 5px 0;
+            border-radius: 2mm;
+            cursor: pointer;
+            width: auto; /* Automatically adjust width based on content */
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        /* Style for selected location */
+        input[type="radio"]:checked + label {
+            background: rgb(28, 185, 120);
+            color: white;
+            font-weight: 600;
+        }
+    </style>
+      
+    
+  </head>
+
+  <body>
+    <nav class="w-full fixed top-0 left-0 px-5 lg:px-8 xl:px-[5%] py-4 flex items-center justify-start z-50">
+      <img src="./image/logo.png" alt="Logo" class="w-28 cursor-pointer">
+    </nav>
+
+    <div id="current" class="w-full flex flex-col items-center justify-center mt-24">
+      <div class="center">
+        <div class="tickets">
+          <div class="ticket-selector">
+            <div class="head">
+              <div class="title">Movie Name</div>
+            </div>
+            <div class="seats">
+              <div class="status">
+                <div class="item">Available</div>
+                <div class="item">Booked</div>
+                <div class="item">Selected</div>
+              </div>
+              <div class="all-seats">
+                <input type="checkbox" name="tickets" id="s1" />
+                <label for="s1" class="seat booked"></label>
+              </div>
+            </div>
+            <div class="timings">
+              <div class="dates">
+                <!-- Dates inputs -->
+                <input type="radio" name="date" id="d1" checked />
+                <label for="d1" class="dates-item"><div class="day">Sun</div><div class="date">11</div></label>
+                <input type="radio" id="d2" name="date" />
+                <label class="dates-item" for="d2"><div class="day">Mon</div><div class="date">12</div></label>
+                <input type="radio" id="d3" name="date" />
+                <label class="dates-item" for="d3"><div class="day">Tue</div><div class="date">13</div></label>
+                <input type="radio" id="d4" name="date" />
+                <label class="dates-item" for="d4"><div class="day">Wed</div><div class="date">14</div></label>
+                <input type="radio" id="d5" name="date" />
+                <label class="dates-item" for="d5"><div class="day">Thu</div><div class="date">15</div></label>
+                <input type="radio" id="d6" name="date" />
+                <label class="dates-item" for="d6"><div class="day">Fri</div><div class="date">16</div></label>
+                <input type="radio" id="d7" name="date" />
+                <label class="dates-item" for="d7"><div class="day">Sat</div><div class="date">17</div></label>
+              </div>
+              <div class="times">
+                <!-- Time inputs -->
+                <input type="radio" name="time" id="t1" checked />
+                <label for="t1" class="time">11:00</label>
+                <input type="radio" id="t2" name="time" />
+                <label for="t2" class="time">14:30</label>
+                <input type="radio" id="t3" name="time" />
+                <label for="t3" class="time">18:00</label>
+                <input type="radio" id="t4" name="time" />
+                <label for="t4" class="time">21:30</label>
+              </div>
+              <div class="location">
+                <div class="location">
+                    <div class="location-title">Select Location</div>
+                    <div class="location-items">
+                        <input type="radio" name="location" id="location1" />
+                        <label for="location1" class="location-item">Lubbock</label>
+                
+                        <input type="radio" name="location" id="location2" />
+                        <label for="location2" class="location-item">Amarillo</label>
+                
+                        <input type="radio" name="location" id="location3" />
+                        <label for="location3" class="location-item">Levelland</label>
+                
+                        <input type="radio" name="location" id="location4" />
+                        <label for="location4" class="location-item">Plainview</label>
+                
+                        <input type="radio" name="location" id="location5" />
+                        <label for="location5" class="location-item">Snyder</label>
+                
+                        <input type="radio" name="location" id="location6" />
+                        <label for="location6" class="location-item">Abilene</label>
+                    </div>
+                </div>
+                
+              </div>
+              
+            </div>
+          </div>
+          <div class="price">
+            <div class="total">
+              <span><span class="count">0</span> Tickets</span>
+              <div class="amount">0</div>
+            </div>
+            <button type="button" onclick="window.location.href='checkout.html'">Book</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let seats = document.querySelector(".all-seats");
+      for (var i = 0; i < 59; i++) {
+        let randint = Math.floor(Math.random() * 2);
+        let booked = randint === 1 ? "booked" : "";
+        seats.insertAdjacentHTML(
+          "beforeend",
+          '<input type="checkbox" name="tickets" id="s' +
+            (i + 2) +
+            '" /><label for="s' +
+            (i + 2) +
+            '" class="seat ' +
+            booked +
+            '"></label>'
+        );
+      }
+
+      let tickets = seats.querySelectorAll("input");
+      tickets.forEach((ticket) => {
+        ticket.addEventListener("change", () => {
+          let amount = document.querySelector(".amount").innerHTML;
+          let count = document.querySelector(".count").innerHTML;
+          amount = Number(amount);
+          count = Number(count);
+
+          if (ticket.checked) {
+            count += 1;
+            amount += 10;
+          } else {
+            count -= 1;
+            amount -= 10;
+          }
+          document.querySelector(".amount").innerHTML = amount;
+          document.querySelector(".count").innerHTML = count;
+        });
+      });
+
+      function selectLocation(element) {
+        // Remove 'selected' class from all locations
+        const locations = document.querySelectorAll('.location-item');
+        locations.forEach((location) => {
+          location.classList.remove('selected');
+        });
+    
+        // Add 'selected' class to the clicked location
+        element.classList.add('selected');
+      }
+    </script>
+  </body>
+</html>
