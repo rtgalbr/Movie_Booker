@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,8 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #below this is the required apps for Oauth2.0 to work
+    'django.contrib.sites', 
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google', 
+    #below this is the django app
+    
+    'movies.apps.MoviesConfig', 
+    
+    'payments',
 ]
 
+SITE_ID = 1 #this referes to the order of the site (i.e. http://localhost) in the django database, if this number is changed, expect a error message
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -47,17 +59,25 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware', #Oauth2.0 required middleware
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',#Oauth2.0 required backend
 ]
 
 ROOT_URLCONF = 'Movie_booker.urls'
 
-TEMPLATES = [
+TEMPLATES = [ #allows the program to find your templates to display online
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -66,6 +86,8 @@ TEMPLATES = [
     },
 ]
 
+STATIC_URL = '/static/' 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 WSGI_APPLICATION = 'Movie_booker.wsgi.application'
 
 
@@ -79,6 +101,20 @@ DATABASES = {
     }
 }
 
+
+#URLs for login, logout, and redirects
+LOGIN_URL = 'landing'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'hub'
+LOGOUT_REDIRECT_URL = 'home'
+SOCIALACCOUNT_LOGIN_ON_GET=True
+SOCIALACCOUNT_LOGOUT_ON_GET=True
+ACCOUNT_LOGOUT_ON_GET=True
+
+
+
+MEDIA_ROOT = ''
+MEDIA_URL = ''
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -98,6 +134,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PAYMENT_VARIANTS = {
+    'dummy': ('payments.dummy.DummyProvider', {}),
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -116,6 +156,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Your app-level static files
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

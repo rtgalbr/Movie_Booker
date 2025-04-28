@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Booking System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Ovo&display=swap" rel="stylesheet">
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <!-- basic button -->
+    <nav class="w-full fixed px-5 lg:px-8 xl:px-[5%] py-4 flex items-center justify-between z-50">
+        <!-- make all the button allign on the same line -->
+        <img src="movies/profiles/profile_images/default.png" alt="Logo"
+        class = "w-28 cursos-pointer mr-14">
+        <!-- images file has to be in the same folder -->
+        <!-- w-28: adjust the logo size -->
+        <ul class="hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50 font-Ovo">
+            <li class="cursor-pointer hover:-translate-y-1 duration-500"><a href="{% url 'user_profile'  %}" >Profile</a></li>
+            <li class="cursor-pointer hover:-translate-y-1 duration-500"><a href="{% url 'browse'  %}">Current</a></li>
+            <li class="cursor-pointer hover:-translate-y-1 duration-500"><a href="{% url 'future_catalog' %}">Upcoming</a></li>
+            <li class="cursor-pointer hover:-translate-y-1 duration-500"><a href="{% url 'ticket_purchases' %}">Tickets</a></li>
+            <!--<li class="cursor-pointer hover:-translate-y-1 duration-500"><a href="#contact">Contact me</a></li> -->
+        </ul> 
+   
+        <button type='button' class='hidden lg:flex items-center gap-3 px-10 py-2.5 border border-gray-500 rounded-full ml-4 font-Ovo cursor-pointer hover:-translate-y-1 duration-500' > <a href={% url 'account_logout' %}> Logout</a> </button>             
+        <!-- navigate user/admin to the log in page -->
+        <button class="block md:hidden ml-3" onclick="openmenu()"> <!-- hid the navigaiton bar when on larger screen -->
+            <img src="movies/profiles/profile_images/default.png" alt="" class="w-6">
+        </button>
+        </div>
+
+        <!-- mobile menu -->
+        <ul id="sidemenu" class="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-red-50 transition duration-500 font-Ovo">
+
+            <div class="absolute right-5 top-7" onclick="closemenu()">
+                <img src="movies/profiles/profile_images/default.png" alt="" class="w-6">
+            </div>
+            <li><a href="#home" onclick="closemenu()">Home</a></li>
+            <li><a href="#current" onclick="closemenu()">Current</a></li>
+            <li><a href="#upcoming" onclick="closemenu()">Upcoming</a></li>
+            <!-- close the tab when click on button -->
+        </ul> 
+        
+    </nav>
+
+    <!-- Home page -->
+    <div id="home" class="w-11/12 max-w-3xl text-center mx-auto h-screen flex flex-col items-center justify-center gap-4">
+
+        <h1 class="text-3xl sm:text-6xl lg:text-[66px] font-Ovo">Coming soon ...</h1>
+
+
+    </div>
+
+
+    <!-- footer -->
+    <div class="mt-20">
+            <div class="text-center">
+                <img src="./image/logo.png" alt="" class="w-36 mx-auto mb-2">
+                <div class="w-max flex items-center gap-2 mx-auto">
+                    <img src="./image/email.png" alt="" class="w-10">
+                    moviebookingsystem@gmail.com
+                </div>
+            </div>
+            <div class="text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] mt-12 py-6">
+                <p>© 2025 Nhu Le. All rights reserved.</p>
+                <ul class=" flex items-center gap-10 justify-center mt-4 sm:mt-0">
+                    <li><a href="https://www.instagram.com/_nhule_pb/">Instagram</a></li>
+                    <li><a href="https://www.linkedin.com/in/nhu-le-9179972a6/">Linkedin</a></li>
+                    <li><a href="https://github.com/nhulepb/">GitHub</a></li>
+
+                </ul>
+            </div>
+    </div> 
+
+    <script src="{% static 'script.js' %}"></script>  <!-- link the file --> 
+    
+    {% endif %}
+</body>
+</html>

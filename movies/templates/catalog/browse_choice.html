@@ -1,0 +1,20 @@
+{% block content %}
+<div class="flex items-center justify-center min-h-screen">
+  <div class="flex flex-col items-center space-y-8">
+    <h2 class="text-4xl font-bold text-center">Browse Movies</h2>
+    <div class="space-y-4">
+      <form action="{% url 'browse' %}" method="get">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-xl text-lg w-72">
+          View Current Catalog
+        </button>
+      </form>
+
+      <form action="{% url 'future_catalog' %}" method="get">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-xl text-lg w-72">
+          View Future Catalog
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

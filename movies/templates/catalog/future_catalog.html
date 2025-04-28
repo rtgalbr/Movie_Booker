@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Future Catalog</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Future Catalog</h1>
+        {%if user.is_authenticated%}
+            <a href="{% url 'hub' %}" class="button">Return to home page</a>
+        {%else%}
+            <a href="{% url 'home' %}" class="button">Return to home page</a>
+        {%endif%}
+
+        <form method="get" action="{% url 'future_catalog' %}">
+            <input type="text" name="search" placeholder="Search by title..." value="{{ request.GET.search }}">
+            <button type="submit">Search</button>
+        </form>
+
+        <ul>
+            {% for movie in movies %}
+                <li>
+                    <h3>{{ movie.Title }}</h3>
+                    {% if movie.image %}
+                        <img src="{{ movie.image.url }}" alt="{{ movie.Title }}" style="max-width: 300px;">
+                    {% endif %}
+                    <a href="{% url 'future_movie_detail' movie.id %}" class="button">View details</a>
+                    
+                </li>
+            {% empty %}
+                <li>No future movies found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

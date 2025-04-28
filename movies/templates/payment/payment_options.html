@@ -1,0 +1,9 @@
+<h2>Select a Payment Method</h2>
+<p>Ticket for {{ticket.showtime.movie.Title}} at {{ticket.showtime.start_time}}</p>
+
+<form>
+    <p><strong>Total Price:</strong> ${{ total_price }}</p>
+    <a href="{% url 'payment_verify' ticket.id %}">Pay with Credit Card</a><br><br>
+
+    <a href="{% url 'payment_fail' ticket.id %}" style="color: red;">Fail Payment</a>
+</form>
