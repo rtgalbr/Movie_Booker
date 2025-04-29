@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     
     'movies.apps.MoviesConfig', 
     
-    'payments',
+    
 ]
 
 SITE_ID = 1 #this referes to the order of the site (i.e. http://localhost) in the django database, if this number is changed, expect a error message
