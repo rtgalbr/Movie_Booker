@@ -24,7 +24,7 @@
             
         </ul> 
    
-        <button type='button' class='hidden lg:flex items-center gap-3 px-10 py-2.5 border border-gray-500 rounded-full ml-4 font-Ovo cursor-pointer hover:-translate-y-1 duration-500' onclick="window.location.href={% url 'landing' %}">Log in</button>             
+        <a type='button' class='hidden lg:flex items-center gap-3 px-10 py-2.5 border border-gray-500 rounded-full ml-4 font-Ovo cursor-pointer hover:-translate-y-1 duration-500' href="{% url 'account_login' %}">Log in</a>             
         
         <button class="block md:hidden ml-3" onclick="openmenu()"> 
             <img src="movies/profiles/profile_images/default.png" alt="" class="w-6">
@@ -32,16 +32,7 @@
         </div>
 
         
-        <ul id="sidemenu" class="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-red-50 transition duration-500 font-Ovo">
-
-            <div class="absolute right-5 top-7" onclick="closemenu()">
-                <img src="movies/profiles/profile_images/default.png" alt="" class="w-6">
-            </div>
-            <li><a href="#home" onclick="closemenu()">Home</a></li>
-            <li><a href="{% url 'browse'  %}" onclick="closemenu()">Current</a></li>
-            <li><a href="#upcoming" onclick="closemenu()">Upcoming</a></li>
-            
-        </ul> 
+       
         
     </nav>
 

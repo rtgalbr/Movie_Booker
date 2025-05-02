@@ -19,7 +19,7 @@
         <div class="form-container sign-up-container">
             <form method="post" action="{% url 'account_signup' %}">
                 {% csrf_token %}
-                {{form.as_p}}
+                
                 <h1>Create Account</h1>
                 <div class="social-container">
                     
@@ -36,7 +36,7 @@
                     <label></label>
                 </div>
                 <div class="infield">
-                    <input type="password" placeholder="Password" name="password"/>
+                    <input type="password" placeholder="Password" name="password1"/>
                     <label></label>
                 </div>
                 <button type = "submit" class = "button">Sign Up</button>
@@ -45,7 +45,7 @@
         <div class="form-container sign-in-container">
             <form method="post" action="{% url 'account_login' %}">
                 {% csrf_token %}
-                {{form.as_p}}
+                
                 <h1>Sign in</h1>
                 <div class="social-container">
                     

@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    
+    'movies.apps.MoviesConfig', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,7 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google', 
     
     
-    'movies.apps.MoviesConfig', 
+    
     
 ]
 
@@ -103,12 +105,12 @@ DATABASES = {
 
 
 #URLs for login, logout, and redirects
-LOGIN_URL = 'landing'
+
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'hub'
 LOGOUT_REDIRECT_URL = 'home'
 SOCIALACCOUNT_LOGIN_ON_GET=True
-SOCIALACCOUNT_LOGOUT_ON_GET=True
+SOCIALACCOUNT_LOGOUT_ON_GET=True 
 ACCOUNT_LOGOUT_ON_GET=True
 
 
