@@ -4,7 +4,7 @@
 
 {% load static %}
 
-{% block title %}Profile Page{% endblock title %}
+
 
 {% block content %}
 <!DOCTYPE html>
@@ -22,13 +22,13 @@
 
 <body class="overflow-x-hidden font-Outfit leading-8">
     <nav class="w-full fixed px-5 lg:px-8 xl:px-[5%] py-4 flex items-center justify-between z-50">
-        <img src="{% static 'image/logo.png' %}" alt="Logo" class="w-28 cursor-pointer mr-14">
+        <img src="{% static 'movies/images/logo.png' %}" alt="Logo" class="w-28 cursor-pointer mr-14">
     </nav>
 
     <div class="flex w-full px-[12%] py-40 gap-20">
-        <!-- Parent container: flex row, gap between left and right -->
+       
 
-        <!-- Left Column -->
+        
         <div class="flex flex-col items-start gap-8 w-1/3">
             <h2 class="text-4xl font-Ovo mb-6">Personal Details</h2>
 
@@ -40,19 +40,17 @@
                 Edit Profile
             </button>
 
-            <button type="button" onclick="showSection('purchaseHistorySection')" class="flex items-center gap-2 px-5 py-2 border border-gray-500 text-gray-700 rounded-full font-Ovo cursor-pointer hover:-translate-y-1 duration-500">
-                Purchase History
-            </button>
+            
 
             <a href="{% url 'account_logout' %}" class="flex items-center gap-2 px-5 py-2 border border-gray-500 text-gray-700 rounded-full font-Ovo cursor-pointer hover:-translate-y-1 duration-500">
                 Logout
             </a>
         </div>
 
-        <!-- Right Column -->
+       
         <div class="flex flex-col w-2/3 gap-6">
 
-            <!-- Edit Profile Section -->
+           
             <div id="editProfileSection" class="flex flex-col gap-6">
                 <h3 class="text-3xl font-Ovo mb-4">Edit Profile</h3>
 
@@ -121,22 +119,23 @@
                 </form>
             </div>
 
-            <!-- Purchase History Section -->
-            <div id="purchaseHistorySection" class="hidden flex-col gap-6">
-                <h3 class="text-3xl font-Ovo mb-4">Purchase History</h3>
-                <p class="font-Ovo text-gray-700">No purchases yet.</p>
-            </div>
+            
 
         </div>
     </div>
 
     <script>
         function showSection(sectionId) {
-            document.getElementById('editProfileSection').classList.add('hidden');
-            document.getElementById('purchaseHistorySection').classList.add('hidden');
-            document.getElementById(sectionId).classList.remove('hidden');
+           
+            const edit = document.getElementById('editProfileSection');
+            const history = document.getElementById('purchaseHistorySection');
+            if (edit) edit.classList.add('hidden');
+            if (history) history.classList.add('hidden');
+            const section = document.getElementById(sectionId);
+            if (section) section.classList.remove('hidden');
         }
     </script>
+    
 
 </body>
 </html>

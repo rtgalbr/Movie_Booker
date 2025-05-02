@@ -21,6 +21,7 @@
   <p><a href="{% url 'userlogin' %}">Log in</a> to leave a review.</p>
 {% endif %}
 
+<a href="{{ request.META.HTTP_REFERER|default:'#' }}">Back to Movie</a>
 <a href="{% url 'browse' %}">Back to Browse</a>
 {%if user.is_authenticated%}
     <a href="{% url 'hub' %}" class="button">Return to home page</a>

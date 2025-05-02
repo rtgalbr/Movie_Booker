@@ -18,15 +18,13 @@ from .models import Movie, Showtime, Ticket, SeatSelection
 
 def signup_view(request):
     if request.method == 'POST':
-        form = SignupForm(request.POST)  # Bind data from the request
+        form = SignupForm(request.POST) 
         if form.is_valid():
-            form.save(request)  # Save the user
-            messages.success(request, 'Your account has been created successfully!')
-            return redirect('hub')  # Redirect to the login page or any other page
+            form.save(request)
+            return redirect('hub') 
     else:
-        form = SignupForm()  # Create a new instance of the form
-
-    return render(request, 'authentication/landing.html', {'form': form})  # Render the form in the template
+        form = SignupForm()  
+    return render(request, 'authentication/landing.html', {'form': form})  
 
 def login_view(request):
     form = LoginForm()
@@ -48,8 +46,7 @@ def browse(request):
     query = request.GET.get('search')
     if query:
         movies = Movie.objects.filter(Title__icontains=query)
-    else:
-        movies = Movie.objects.all()
+    else: movies = Movie.objects.all()
     return render(request, 'catalog/browse.html', {'movies': movies})
 
 def browse_detail(request, movie_id):
@@ -76,7 +73,6 @@ def profile(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, 'Your profile is updated successfully')
             return redirect(to='user_profile')
     else:
         user_form = UpdateUserForm(instance=request.user)
@@ -117,32 +113,33 @@ def movie_reviews(request, movie_id):
 @login_required
 def buy_tickets(request, showtime_id):
     showtime = get_object_or_404(Showtime, pk=showtime_id)
-    available_seats = showtime.seats.filter(is_taken=False)
+    available_seats = list(showtime.seats.filter(is_taken=False))
 
     if request.method == 'POST':
-        selected_seat_ids = request.POST.getlist('selected_seats')
-        
-        if not selected_seat_ids:
-            messages.error(request, "Please select at least one seat.")
+        try:
+            num_tickets = int(request.POST.get('num_tickets'))
+        except (TypeError, ValueError):
+            messages.error(request, "Invalid number of tickets.")
             return redirect('buy_tickets', showtime_id=showtime.id)
 
-        
+        if num_tickets < 1 or num_tickets > len(available_seats):
+            messages.error(request, f"You can only select between 1 and {len(available_seats)} tickets.")
+            return redirect('buy_tickets', showtime_id=showtime.id)
+
+        selected_seats = available_seats[:num_tickets]
+
         ticket = Ticket.objects.create(user=request.user, showtime=showtime, purchased=False)
 
-        for seat_id in selected_seat_ids:
-            seat = Seat.objects.get(id=seat_id, showtime=showtime, is_taken=False)
-            
-
+        for seat in selected_seats:
             SeatSelection.objects.create(ticket=ticket, seat_number=seat.seat_number)
 
-       
         messages.success(request, "Redirecting to payment options...")
         return redirect('payment_options', ticket_id=ticket.id)
 
     return render(request, 'catalog/buy_tickets.html', {
         'showtime': showtime,
         'available_seats': available_seats
-    })    
+    })
 
 @login_required
 def payment_options(request, ticket_id):

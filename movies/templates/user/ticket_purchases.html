@@ -7,7 +7,13 @@
       <li>
         Movie: {{ ticket.showtime.movie.Title }}<br>
         Showtime: {{ ticket.showtime.start_time|date:"D, M d, Y H:i" }}<br>
-        Ticket Code: <strong>{{ ticket.ticket_code }}</strong>
+        Ticket Code: <strong>{{ ticket.ticket_code }}</strong><br>
+        Use Status: 
+        {% if ticket.used %}
+          Used
+        {% else %}
+          Not Used
+        {% endif %}
       </li>
     {% endfor %}
   </ul>

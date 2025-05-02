@@ -4,9 +4,9 @@ from movies.views import home, hub, landing, login_view, signup_view, profile, b
 
 
 urlpatterns = [
-    path('landing/', landing, name='landing'),  # Landing page (accessible without login)
+    path('landing/', landing, name='landing'),  #
     path('', home, name='home'), 
-    path('hub/', hub, name='hub'),# Home page (requires login)
+    path('hub/', hub, name='hub'),
     path('userlogin/', login_view, name='userlogin'),
     path('usersignup/', signup_view, name='usersignup'),
     path('user/profile/', profile, name='user_profile'),

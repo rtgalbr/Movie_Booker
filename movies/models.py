@@ -1,7 +1,10 @@
 from django.utils import timezone
+from datetime import timedelta
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
+
+
 
 
 
@@ -9,6 +12,9 @@ class Movie(models.Model):
     Title = models.CharField(max_length=255)
     image = models.ImageField(upload_to="movies/files/covers")
     description = models.TextField(max_length=2000)
+
+    def __str__(self):
+        return self.Title
     
 class FutureMovie(models.Model):
     Title = models.CharField(max_length=255)
@@ -51,6 +57,7 @@ class Showtime(models.Model):
     start_time = models.DateTimeField(default=timezone.now)
     end_time = models.DateTimeField(default=timezone.now)
     location = models.CharField(max_length=100, default="Theater One")
+    
 
     def save(self, *args, **kwargs):
         is_new = self.pk is None
@@ -59,14 +66,30 @@ class Showtime(models.Model):
             self.generate_seats()
 
     def generate_seats(self):
-        for i in range(1, 11):  # A1 to A10
+        for i in range(1, 11):  
             Seat.objects.get_or_create(showtime=self, seat_number=f"A{i}")
 
     def __str__(self):
-        return f"{self.movie.Title} - {self.start_time} at {self.location}"
+        return f"{self.movie.Title} -  {self.start_time} at {self.location}"
+    @property
+    def status(self):
+        currenttim = timezone.now()
+        if currenttim > self.end_time:
+            return "Completed"
+        elif self.start_time <= currenttim <= self.end_time:
+            return "In Progress"
+        elif self.seats.filter(is_taken=False).count()== 0:
+            return "Fully Booked"
+        elif currenttim < self.start_time - timedelta(minutes=15):
+            return "Open"
+        elif self.start_time - timedelta(minutes=15) <= currenttim < self.start_time:
+            return "Closed For Online Purchase"
+        
+        
+        
     
 class Seat(models.Model):
-    showtime = models.ForeignKey(Showtime, on_delete=models.CASCADE, related_name='seats')
+    showtime = models.ForeignKey(Showtime,on_delete=models.CASCADE, related_name='seats')
     seat_number = models.CharField(max_length=10)
     is_taken = models.BooleanField(default=False)
 
@@ -75,9 +98,10 @@ class Seat(models.Model):
     
 class Ticket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    showtime = models.ForeignKey(Showtime, on_delete=models.CASCADE, related_name="tickets")
+    showtime = models.ForeignKey(Showtime, on_delete=models.CASCADE,related_name="tickets")
     purchased = models.BooleanField(default=False)
-    ticket_code = models.CharField(max_length=100, blank=True, null=True) 
+    ticket_code = models.CharField(max_length=100, blank=True, null=True)
+    used = models.BooleanField(default=False) 
 
     def generate_ticket_code(self):
         if not self.ticket_code:
@@ -85,7 +109,7 @@ class Ticket(models.Model):
             self.save()
 
     def __str__(self):
-        return f"{self.user.username} - {self.showtime.movie.Title} - {self.showtime.start_time}"
+        return f"{self.user.username} - {self.showtime.movie.Title} -{self.showtime.start_time}"
     
 class SeatSelection(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='seat_selections')
